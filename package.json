@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/sider_types",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Shared domain types for Sider — AI assistance for generic web apps.",
   "license": "BUSL-1.1",
   "publishConfig": {
