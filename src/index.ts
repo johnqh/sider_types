@@ -13,3 +13,4 @@ export * from "./api";
 export * from "./actions";
 export * from "./templating";
 export * from "./recipe-hash";
+export * from "./observe";
