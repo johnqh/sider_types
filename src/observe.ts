@@ -35,12 +35,28 @@ export interface SnapshotLink {
   label?: string;
 }
 
+/**
+ * An anchor on the page pointing at a DIFFERENT origin.
+ *
+ * Kept apart from `SnapshotLink` on purpose: `links` feeds view identity and the
+ * graph's declared transitions, and a cross-origin entry there would churn every
+ * view signature. This is evidence of one thing only — that this site offers a
+ * way to reach that one.
+ */
+export interface SnapshotExternalLink {
+  origin: string;
+  /** Visible text of the link, e.g. "Careers at USF". */
+  label?: string;
+}
+
 export interface PageSnapshot {
   /** Path with query VALUES dropped and keys kept: /search?q={q} */
   urlPath: string;
   title?: string;
   regions: SnapshotRegion[];
   links: SnapshotLink[];
+  /** Off-site origins this page links to. Absent from older extension builds. */
+  externalLinks?: SnapshotExternalLink[];
   /** Structural text only — headings, control names, link labels, item titles. */
   contentMd?: string;
   /** How the agent arrived here, when known. */
