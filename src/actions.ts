@@ -41,3 +41,46 @@ export interface ReadPageResult {
   items: ExtractedItem[];
   count: number;
 }
+
+/**
+ * Icons a presented list may use.
+ *
+ * A closed set, not a free string: the panel maps each key to its own glyph, so
+ * the model cannot name an icon that does not exist or reach the DOM through it.
+ */
+export const PRESENT_LIST_ICONS = [
+  "briefcase",
+  "document",
+  "location",
+  "calendar",
+  "tag",
+  "person",
+  "building",
+  "cart",
+  "star",
+  "search",
+] as const;
+
+export type PresentListIcon = (typeof PRESENT_LIST_ICONS)[number];
+
+/** One row of a presented list. */
+export interface PresentedListItem {
+  title: string;
+  /** Short scalars shown under the title, e.g. ["Part time", "USF Hilltop Campus"]. */
+  meta?: string[];
+  /** Absolute URL, or a path resolved against the driven tab's origin. */
+  href?: string;
+  imageUrl?: string;
+}
+
+/**
+ * What the agent asks the panel to show.
+ *
+ * Data only — never markup. The agent decides WHAT matters; the panel decides
+ * how it looks.
+ */
+export interface PresentedListSpec {
+  title?: string;
+  icon?: PresentListIcon;
+  items: PresentedListItem[];
+}
