@@ -1,6 +1,6 @@
 {
 	"name": "@sudobility/sider_types",
-	"version": "0.0.11",
+	"version": "0.0.12",
 	"description": "Shared domain types for Sider — AI assistance for generic web apps.",
 	"license": "BUSL-1.1",
 	"publishConfig": {
@@ -15,9 +15,11 @@
 	],
 	"scripts": {
 		"build": "tsc -p tsconfig.json",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit",
+		"test": "bun test"
 	},
 	"devDependencies": {
+		"@types/bun": "^1.3.14",
 		"typescript": "^5.9.3"
 	}
 }
