@@ -43,6 +43,94 @@ export interface ReadPageResult {
 }
 
 /**
+ * Every tool the agent can call, named once.
+ *
+ * sider_api's decision endpoint produces one of these strings and the extension
+ * routes on it. Before this existed the name was retyped in four places — the
+ * panel's dispatch, two presentation tables, and the live harness — and nothing
+ * made them agree: `presentList` was emitted with no executor and answered
+ * "unknown tool" on every turn, so the agent kept retrying a run it had already
+ * done the work for.
+ */
+export const TOOL_NAMES = [
+  "readPage",
+  "navigateTo",
+  "siderDomAction",
+  "callSiderTool",
+  "attachFile",
+  "downloadFile",
+  "planChecklist",
+  "presentList",
+] as const;
+
+export type ToolName = (typeof TOOL_NAMES)[number];
+
+/** Everything `siderDomAction` can do to a page. */
+export const DOM_ACTION_TYPES = [
+  "hover",
+  "click",
+  "type",
+  "select",
+  "press",
+  "scroll",
+  "hold",
+] as const;
+
+export type DomActionType = (typeof DOM_ACTION_TYPES)[number];
+
+/**
+ * One act on a page.
+ *
+ * `controlName` is the currency: the site graph plans in visible labels, because
+ * a selector is regenerated per render and means nothing to another user of the
+ * site. `selector` remains for exploration, when no label identifies the target,
+ * and may carry a frame prefix (see the extension's `frame-ref.ts`).
+ */
+export interface DomAction {
+  type: DomActionType;
+  controlName?: string;
+  within?: string;
+  selector?: string;
+  text?: string;
+  /** For `press` — a key name, not a character. */
+  key?: string;
+  /** For `hold` — how long to hold, in milliseconds. */
+  ms?: number;
+}
+
+export interface ReadPageArgs {
+  /** Free-text steer for extraction ("job listings", "prices"). */
+  hint?: string;
+}
+
+export interface NavigateToArgs {
+  url: string;
+}
+
+export interface DownloadFileArgs {
+  /** May be relative — the caller resolves it against the driven tab's origin. */
+  url: string;
+  filename?: string;
+}
+
+export interface AttachFileArgs {
+  /** Which of the user's attached files to use; absent means all of them. */
+  fileNames?: string[];
+  /** Which upload field, when a form has more than one. */
+  controlName?: string;
+}
+
+export interface CallSiderToolArgs {
+  toolId: string;
+  args?: Record<string, unknown>;
+}
+
+export interface PlanChecklistArgs {
+  items?: unknown[];
+  budget?: string;
+}
+
+/**
  * Icons a presented list may use.
  *
  * A closed set, not a free string: the panel maps each key to its own glyph, so
