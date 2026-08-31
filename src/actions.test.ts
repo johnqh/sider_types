@@ -19,9 +19,10 @@ test("the tool name contract is exactly these eight", () => {
   ]);
 });
 
-test("the dom action contract is exactly these seven", () => {
+test("the dom action contract is exactly these eight", () => {
   expect([...DOM_ACTION_TYPES].sort()).toEqual([
     "click",
+    "drag",
     "hold",
     "hover",
     "press",
@@ -50,6 +51,7 @@ test("every ToolName is present in TOOL_NAMES", () => {
 test("every DomActionType is present in DOM_ACTION_TYPES", () => {
   const seen: Record<DomActionType, true> = {
     hover: true,
+    drag: true,
     click: true,
     type: true,
     select: true,

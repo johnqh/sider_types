@@ -74,6 +74,7 @@ export const DOM_ACTION_TYPES = [
   "press",
   "scroll",
   "hold",
+  "drag",
 ] as const;
 
 export type DomActionType = (typeof DOM_ACTION_TYPES)[number];
@@ -96,6 +97,22 @@ export interface DomAction {
   key?: string;
   /** For `hold` — how long to hold, in milliseconds. */
   ms?: number;
+  /**
+   * For `drag` — how far to drag, in pixels from the control's centre.
+   *
+   * A slider thumb is the common case: a large positive `dx` drags it to the
+   * far end of its track, and the actuator clamps to the track rather than
+   * dragging into empty page.
+   */
+  dx?: number;
+  dy?: number;
+  /**
+   * For `drag` — the control to drop ONTO, named the way every other control is.
+   *
+   * The alternative to `dx`/`dy`, for reordering and drag-and-drop targets where
+   * the destination is a thing rather than a distance.
+   */
+  toControlName?: string;
 }
 
 export interface ReadPageArgs {
