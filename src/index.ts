@@ -15,3 +15,4 @@ export * from "./templating";
 export * from "./personal-data";
 export * from "./recipe-hash";
 export * from "./observe";
+export * from "./prompting";
