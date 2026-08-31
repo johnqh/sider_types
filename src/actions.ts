@@ -107,6 +107,15 @@ export interface DomAction {
   dx?: number;
   dy?: number;
   /**
+   * For `drag` — the control to drag FROM, when it is not the target itself.
+   *
+   * The start is normally the control the action names, which is right for a
+   * slider: you grab the thumb. Name it separately when the thing you pick up
+   * and the thing you are acting on differ — dragging a row's handle to reorder
+   * the row, or picking up a marker that sits inside the control being set.
+   */
+  fromControlName?: string;
+  /**
    * For `drag` — the control to drop ONTO, named the way every other control is.
    *
    * The alternative to `dx`/`dy`, for reordering and drag-and-drop targets where
