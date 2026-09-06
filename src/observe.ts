@@ -6,7 +6,18 @@
 // would land in is shared with every other user of that site. Neither is omitted
 // by a filter — neither exists in these types.
 
-export type SnapshotActionKind = "navigate" | "submit" | "input" | "select" | "click";
+// `attach` is the odd one out: it is the only kind whose action does not go
+// through the DOM action verbs. A file input cannot be typed into — `value` is
+// read-only for files by design — so calling it an `input` told the agent to do
+// the one thing that throws. It gets its own kind so the description of the
+// page names what the field actually takes.
+export type SnapshotActionKind =
+  | "navigate"
+  | "submit"
+  | "input"
+  | "select"
+  | "click"
+  | "attach";
 
 /** A control's SHAPE. The graph hashes `tag|role|name|actionKind` into view identity. */
 export interface SnapshotControl {
